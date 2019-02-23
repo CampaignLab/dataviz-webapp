@@ -40,7 +40,6 @@ class App extends Component {
     const possibleXs = Object.keys(data[0]).filter(
       (d) => ['Area Code', 'Area Name', 'Parent Name'].indexOf(d) == -1,
     );
-    console.log('possibleXs [hxjklbcu]:', possibleXs); // eslint-disable-line no-console
 
     const x = possibleXs[0];
     const y = 'delta_Lab';
@@ -50,25 +49,24 @@ class App extends Component {
       d3.max(get_clean_data(data, x, y).map((d) => d[0])),
     ];
 
+    const plotData = [
+      {
+        x: data.map((d) => +d[x]),
+        y: data.map((d) => +d[y]),
+        mode: 'markers',
+        type: 'scatter',
+      },
+      {
+        x: minmax,
+        y: minmax.map((d) => get_linear_regression(data, x, y)(d)),
+        mode: 'lines',
+        type: 'scatter',
+      },
+    ];
+
     return (
       <div className="app">
-        <Plot
-          data={[
-            {
-              x: data.map((d) => +d[x]),
-              y: data.map((d) => +d[y]),
-              mode: 'markers',
-              type: 'scatter',
-            },
-            {
-              x: minmax,
-              y: minmax.map((d) => get_linear_regression(data, x, y)(d)),
-              mode: 'lines',
-              type: 'scatter',
-            },
-          ]}
-          layout={{width: 1000, height: 1000, title: 'A Fancy Plot'}}
-        />
+        <Plot data={plotData} layout={{width: 1000, height: 1000, title: x}} />
       </div>
     );
   }
