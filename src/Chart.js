@@ -34,7 +34,7 @@ export default class Chart extends Component {
         data={plotData}
         layout={{
           width: 1000,
-          height: 1000,
+          height: 600,
           title: title,
           yaxis: {title: y},
           hovermode: 'closest',
