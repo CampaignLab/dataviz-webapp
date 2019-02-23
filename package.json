@@ -1,0 +1,19 @@
+{
+  "name": "dataviz-webapp",
+  "version": "1.0.0",
+  "description": "For visualizing CampaignLab data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CampaignLab/dataviz-webapp.git"
+  },
+  "author": "CampaignLab",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/CampaignLab/dataviz-webapp/issues"
+  },
+  "homepage": "https://github.com/CampaignLab/dataviz-webapp#readme"
+}
