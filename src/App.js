@@ -36,36 +36,37 @@ class App extends Component {
     }
 
     const {data} = this.state;
+    let {y} = this.state;
 
-    const y = 'delta_Lab';
+    const possibleYs = [
+      '2018_pct_Con',
+      '2018_pct_Lab',
+      '2018_pct_LDem',
+      '2018_pct_UKIP',
+      '2018_pct_Grn',
+      '2018_pct_Ind',
+      '2018_pct_Oth',
+      'delta_Con',
+      'delta_Lab',
+      'delta_LDem',
+      'delta_UKIP',
+      'delta_Grn',
+      'delta_Ind',
+      'delta_Oth',
+      '2014_PCT_Con',
+      '2014_PCT_Lab',
+      '2014_PCT_LDem',
+      '2014_PCT_UKIP',
+      '2014_PCT_Grn',
+      '2014_PCT_Ind',
+    ];
+    if (!y) {
+      y = possibleYs[0];
+    }
 
+    const notShownXs = [...possibleYs, 'Area Code', 'Area Name', 'Parent Name'];
     const possibleXs = Object.keys(data[0]).filter(
-      (d) =>
-        [
-          'Area Code',
-          'Area Name',
-          'Parent Name',
-          '2018_pct_Con',
-          '2018_pct_Lab',
-          '2018_pct_LDem',
-          '2018_pct_UKIP',
-          '2018_pct_Grn',
-          '2018_pct_Ind',
-          '2018_pct_Oth',
-          'delta_Con',
-          'delta_Lab',
-          'delta_LDem',
-          'delta_UKIP',
-          'delta_Grn',
-          'delta_Ind',
-          'delta_Oth',
-          '2014_PCT_Con',
-          '2014_PCT_Lab',
-          '2014_PCT_LDem',
-          '2014_PCT_UKIP',
-          '2014_PCT_Grn',
-          '2014_PCT_Ind',
-        ].indexOf(d) === -1,
+      (d) => notShownXs.indexOf(d) === -1,
     );
 
     const rsquaredValues = possibleXs
@@ -78,6 +79,15 @@ class App extends Component {
 
     return (
       <div className="app">
+        <div>
+          <select onChange={this.onChangeY.bind(this)}>
+            {possibleYs.map((x) => (
+              <option value={x} key={x}>
+                {x}
+              </option>
+            ))}
+          </select>
+        </div>
         {rsquaredValues.map(({variable, rsquared}) => (
           <Chart
             data={data}
@@ -89,6 +99,10 @@ class App extends Component {
         ))}
       </div>
     );
+  }
+
+  onChangeY(event) {
+    this.setState({y: event.target.value});
   }
 }
 
