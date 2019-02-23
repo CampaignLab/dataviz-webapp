@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
 import {csv} from 'd3-fetch';
-import * as ss from 'simple-statistics';
 
 import Chart from './Chart';
 import * as stats from './stats';
@@ -66,7 +65,7 @@ class App extends Component {
 
     return (
       <div className="app">
-        <div>
+        <div className="y-select">
           <select onChange={this.onChangeY.bind(this)}>
             {possibleYs.map((x) => (
               <option value={x} key={x}>
@@ -75,15 +74,17 @@ class App extends Component {
             ))}
           </select>
         </div>
-        {rsquaredValues.map(({variable, rsquared}) => (
-          <Chart
-            data={data}
-            x={variable}
-            y={y}
-            key={variable}
-            title={`${variable} (R²: ${rsquared})`}
-          />
-        ))}
+        <div className="charts">
+          {rsquaredValues.map(({variable, rsquared}) => (
+            <Chart
+              data={data}
+              x={variable}
+              y={y}
+              key={variable}
+              title={`${variable} (R²: ${rsquared})`}
+            />
+          ))}
+        </div>
       </div>
     );
   }

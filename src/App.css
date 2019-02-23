@@ -1,2 +1,17 @@
 .app {
+  position: absolute;
+}
+
+.y-select {
+  float: right;
+  position: sticky;
+  top: 1rem;
+  z-index: 10;
+  background-color: white;
+  box-shadow: 0 2px 15px 5px rgba(0, 0, 0, 0.1);
+  margin-right: 5rem;
+}
+
+.charts {
+  margin: 1rem;
 }
