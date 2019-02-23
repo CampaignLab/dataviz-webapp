@@ -1,5 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans');
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+text {
+  font-family: 'IBM Plex Sans', sans-serif !important;
+}
 .app {
-  position: absolute;
+  margin: 2rem auto;
+  padding: 2rem;
+  box-shadow: 3px 3px 15px 5px rgba(0, 0, 0, 0.1);
+  max-width: 120ch;
 }
 
 .y-select {
@@ -8,8 +24,9 @@
   top: 1rem;
   z-index: 10;
   background-color: white;
-  box-shadow: 0 2px 15px 5px rgba(0, 0, 0, 0.1);
-  margin-right: 5rem;
+  box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.1);
+  margin-right: 3rem;
+  padding: 1rem;
 }
 
 .charts {
