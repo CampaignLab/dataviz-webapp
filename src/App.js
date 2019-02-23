@@ -74,13 +74,18 @@ class App extends Component {
         rsquared: get_rsquared(data, d, y),
       }))
       .sort((a, b) => b.rsquared - a.rsquared)
-      .slice(0, 5)
-      .map((r) => r['variable']);
+      .slice(0, 5);
 
     return (
       <div className="app">
-        {rsquaredValues.map((x) => (
-          <Chart data={data} x={x} y={y} key={x} />
+        {rsquaredValues.map(({variable, rsquared}) => (
+          <Chart
+            data={data}
+            x={variable}
+            y={y}
+            key={variable}
+            title={`${variable} (R²: ${rsquared})`}
+          />
         ))}
       </div>
     );
