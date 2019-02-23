@@ -56,12 +56,20 @@ class App extends Component {
       '2014_PCT_UKIP',
       '2014_PCT_Grn',
       '2014_PCT_Ind',
+      '2014_PCT_Oth',
     ];
     if (!y) {
       y = possibleYs[0];
     }
 
-    const notShownXs = [...possibleYs, 'Area Code', 'Area Name', 'Parent Name'];
+    const notShownXs = [
+      ...possibleYs,
+      'Area Code',
+      'Area Name',
+      'Parent Name',
+      'Authority',
+      'Ward',
+    ];
     const possibleXs = Object.keys(data[0]).filter(
       (d) => notShownXs.indexOf(d) === -1,
     );
