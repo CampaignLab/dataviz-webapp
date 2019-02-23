@@ -117,21 +117,26 @@ class App extends Component {
             </label>
           </div>
           <div>
-            {x ? (
-              ''
-            ) : (
-              <p>
-                Showing top {chartsToShow} 'most strongly correlated' (using R²)
-                data points with <code>{y}</code> &mdash; or search for data
-                point to show:
-              </p>
-            )}
-            <Select
-              options={xSelectOptions}
-              onChange={this.handleChangeX.bind(this)}
-              value={toSelectOption(x)}
-              isClearable={true}
-            />
+            <p>
+              {x ? (
+                ''
+              ) : (
+                <span>
+                  Showing top {chartsToShow} 'most strongly correlated' (using
+                  R²) data points with <code>{y}</code> &mdash; or search for
+                  data point to show:
+                </span>
+              )}
+            </p>
+            <label>
+              X-axis
+              <Select
+                options={xSelectOptions}
+                onChange={this.handleChangeX.bind(this)}
+                value={toSelectOption(x)}
+                isClearable={true}
+              />
+            </label>
           </div>
         </div>
         {charts}

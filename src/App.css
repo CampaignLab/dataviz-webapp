@@ -27,6 +27,7 @@ text {
   box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.1);
   margin-right: 3rem;
   padding: 1rem;
+  width: 50vw;
 }
 
 .charts {
