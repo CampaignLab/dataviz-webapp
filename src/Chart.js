@@ -11,17 +11,9 @@ const get_linear_regression = (data, variable_x, variable_y) =>
     ss.linearRegression(get_clean_data(data, variable_x, variable_y)),
   );
 
-const get_rsquared = (data, variable_x, variable_y) => {
-  let data_to_fit = get_clean_data(data, variable_x, variable_y);
-  let model = get_linear_regression(data, variable_x, variable_y);
-  return ss.rSquared(data_to_fit, model);
-};
-
 export default class Chart extends Component {
   render() {
-    const {data, x} = this.props;
-
-    const y = 'delta_Lab';
+    const {data, x, y} = this.props;
 
     let minmax = [
       d3.min(get_clean_data(data, x, y).map((d) => d[0])),
