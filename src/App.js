@@ -4,22 +4,9 @@ import {csv} from 'd3-fetch';
 import * as ss from 'simple-statistics';
 
 import Chart from './Chart';
+import * as stats from './stats';
 
 const dataFile = 'health_data_merged_with_election_results.csv';
-
-const get_clean_data = (data, variable_x, variable_y) =>
-  data.map((d) => [+d[variable_x], +d[variable_y]]);
-
-const get_linear_regression = (data, variable_x, variable_y) =>
-  ss.linearRegressionLine(
-    ss.linearRegression(get_clean_data(data, variable_x, variable_y)),
-  );
-
-const get_rsquared = (data, variable_x, variable_y) => {
-  let data_to_fit = get_clean_data(data, variable_x, variable_y);
-  let model = get_linear_regression(data, variable_x, variable_y);
-  return ss.rSquared(data_to_fit, model);
-};
 
 class App extends Component {
   componentWillMount() {
@@ -72,7 +59,7 @@ class App extends Component {
     const rsquaredValues = possibleXs
       .map((d) => ({
         variable: d,
-        rsquared: get_rsquared(data, d, y),
+        rsquared: stats.getRsquared(data, d, y),
       }))
       .sort((a, b) => b.rsquared - a.rsquared)
       .slice(0, 5);

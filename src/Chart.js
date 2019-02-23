@@ -1,23 +1,16 @@
 import React, {Component} from 'react';
 import Plot from 'react-plotly.js';
 import * as d3 from 'd3';
-import * as ss from 'simple-statistics';
 
-const get_clean_data = (data, variable_x, variable_y) =>
-  data.map((d) => [+d[variable_x], +d[variable_y]]);
-
-const get_linear_regression = (data, variable_x, variable_y) =>
-  ss.linearRegressionLine(
-    ss.linearRegression(get_clean_data(data, variable_x, variable_y)),
-  );
+import * as stats from './stats';
 
 export default class Chart extends Component {
   render() {
     const {data, x, y, title} = this.props;
 
     let minmax = [
-      d3.min(get_clean_data(data, x, y).map((d) => d[0])),
-      d3.max(get_clean_data(data, x, y).map((d) => d[0])),
+      d3.min(stats.getCleanData(data, x, y).map((d) => d[0])),
+      d3.max(stats.getCleanData(data, x, y).map((d) => d[0])),
     ];
 
     const plotData = [
@@ -29,7 +22,7 @@ export default class Chart extends Component {
       },
       {
         x: minmax,
-        y: minmax.map((d) => get_linear_regression(data, x, y)(d)),
+        y: minmax.map((d) => stats.getLinearRegression(data, x, y)(d)),
         mode: 'lines',
         type: 'scatter',
       },
