@@ -1,11 +1,22 @@
 import React, {Component} from 'react';
 import './App.css';
 import {csv} from 'd3-fetch';
+import Select from 'react-select';
 
 import Chart from './Chart';
 import * as stats from './stats';
 
 const dataFile = 'health_data_merged_with_election_results.csv';
+
+const toSelectOptions = (dataPointNames) => dataPointNames.map(toSelectOption);
+
+const toSelectOption = (v) => {
+  if (v) {
+    return {value: v, label: v};
+  } else {
+    return undefined;
+  }
+};
 
 class App extends Component {
   componentWillMount() {
@@ -21,7 +32,7 @@ class App extends Component {
       return <div />;
     }
 
-    const {data} = this.state;
+    const {data, x} = this.state;
     let {y} = this.state;
 
     const possibleYs = [
@@ -55,43 +66,85 @@ class App extends Component {
       (d) => notShownXs.indexOf(d) === -1,
     );
 
+    const chartsToShow = 5;
+
     const rsquaredValues = possibleXs
       .map((d) => ({
         variable: d,
         rsquared: stats.getRsquared(data, d, y),
       }))
       .sort((a, b) => b.rsquared - a.rsquared)
-      .slice(0, 5);
+      .slice(0, chartsToShow);
+
+    const xSelectOptions = toSelectOptions(possibleXs);
+    const ySelectOptions = toSelectOptions(possibleYs);
+
+    let charts;
+    if (x) {
+      charts = (
+        <Chart
+          data={data}
+          x={x}
+          y={y}
+          key={x}
+          title={`${x} (R²: ${stats.getRsquared(data, x, y).toFixed(3)})`}
+        />
+      );
+    } else {
+      charts = rsquaredValues.map(({variable, rsquared}) => (
+        <Chart
+          data={data}
+          x={variable}
+          y={y}
+          key={variable}
+          title={`${variable} (R²: ${rsquared.toFixed(3)})`}
+        />
+      ));
+    }
 
     return (
       <div className="app">
         <h1>Campaign Lab data</h1>
-        <div className="y-select">
-          <select onChange={this.onChangeY.bind(this)}>
-            {possibleYs.map((x) => (
-              <option value={x} key={x}>
-                {x}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="charts">
-          {rsquaredValues.map(({variable, rsquared}) => (
-            <Chart
-              data={data}
-              x={variable}
-              y={y}
-              key={variable}
-              title={`${variable} (R²: ${rsquared.toFixed(3)})`}
+        <div className="toolbar">
+          <div>
+            <label>
+              Y-axis
+              <Select
+                options={ySelectOptions}
+                onChange={this.handleChangeY.bind(this)}
+                value={toSelectOption(y)}
+              />
+            </label>
+          </div>
+          <div>
+            {x ? (
+              ''
+            ) : (
+              <p>
+                Showing top {chartsToShow} 'most strongly correlated' (using R²)
+                data points with <code>{y}</code> &mdash; or search for data
+                point to show:
+              </p>
+            )}
+            <Select
+              options={xSelectOptions}
+              onChange={this.handleChangeX.bind(this)}
+              value={toSelectOption(x)}
+              isClearable={true}
             />
-          ))}
+          </div>
         </div>
+        {charts}
       </div>
     );
   }
 
-  onChangeY(event) {
-    this.setState({y: event.target.value});
+  handleChangeY(yOption) {
+    this.setState({y: yOption.value});
+  }
+
+  handleChangeX(xOption) {
+    this.setState({x: xOption ? xOption.value : null});
   }
 }
 

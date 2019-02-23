@@ -18,7 +18,7 @@ text {
   max-width: 120ch;
 }
 
-.y-select {
+.toolbar {
   float: right;
   position: sticky;
   top: 1rem;
