@@ -17,6 +17,7 @@ export default class Chart extends Component {
       {
         x: data.map((d) => +d[x]),
         y: data.map((d) => +d[y]),
+        text: data.map((d) => d['Area Name']),
         mode: 'markers',
         type: 'scatter',
       },
@@ -31,7 +32,17 @@ export default class Chart extends Component {
     return (
       <Plot
         data={plotData}
-        layout={{width: 1000, height: 1000, title: title}}
+        layout={{
+          width: 1000,
+          height: 1000,
+          title: title,
+          yaxis: {title: y},
+          hovermode: 'closest',
+          showlegend: false,
+        }}
+        config={{
+          displayModeBar: false,
+        }}
       />
     );
   }

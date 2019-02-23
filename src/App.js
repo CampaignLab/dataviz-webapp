@@ -65,6 +65,7 @@ class App extends Component {
 
     return (
       <div className="app">
+        <h1>Campaign Lab data</h1>
         <div className="y-select">
           <select onChange={this.onChangeY.bind(this)}>
             {possibleYs.map((x) => (
@@ -81,7 +82,7 @@ class App extends Component {
               x={variable}
               y={y}
               key={variable}
-              title={`${variable} (R²: ${rsquared})`}
+              title={`${variable} (R²: ${rsquared.toFixed(3)})`}
             />
           ))}
         </div>
