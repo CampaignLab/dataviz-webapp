@@ -6,7 +6,14 @@ import * as stats from './stats';
 
 export default class Chart extends Component {
   render() {
-    const {data, x, y} = this.props;
+    const {x, y} = this.props;
+    let {data} = this.props;
+
+    // Filter out points where Y-axis value is 0, generally indicates area
+    // where party didn't stand and so not useful to show.
+    // XXX Do this in parent component before we sort stuff by R-squared so
+    // charts not potentially out of order.
+    data = data.filter((d) => +d[y] !== 0);
 
     let minmax = [
       d3.min(stats.getCleanData(data, x, y).map((d) => d[0])),
