@@ -89,24 +89,10 @@ class App extends Component {
 
     let charts;
     if (x) {
-      charts = (
-        <Chart
-          data={data}
-          x={x}
-          y={y}
-          key={x}
-          title={`${x} (R²: ${stats.getRsquared(data, x, y).toFixed(3)})`}
-        />
-      );
+      charts = <Chart data={data} x={x} y={y} key={x} />;
     } else {
       charts = rsquaredValues.map(({variable, rsquared}) => (
-        <Chart
-          data={data}
-          x={variable}
-          y={y}
-          key={variable}
-          title={`${variable} (R²: ${rsquared.toFixed(3)})`}
-        />
+        <Chart data={data} x={variable} y={y} key={variable} />
       ));
     }
 

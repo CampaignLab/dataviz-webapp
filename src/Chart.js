@@ -6,7 +6,7 @@ import * as stats from './stats';
 
 export default class Chart extends Component {
   render() {
-    const {data, x, y, title} = this.props;
+    const {data, x, y} = this.props;
 
     let minmax = [
       d3.min(stats.getCleanData(data, x, y).map((d) => d[0])),
@@ -29,13 +29,15 @@ export default class Chart extends Component {
       },
     ];
 
+    const rSquared = stats.getRsquared(data, x, y);
+
     return (
       <Plot
         data={plotData}
         layout={{
           width: 1000,
           height: 600,
-          title: title,
+          title: `${x} (R²: ${rSquared.toFixed(3)})`,
           yaxis: {title: y},
           hovermode: 'closest',
           showlegend: false,
